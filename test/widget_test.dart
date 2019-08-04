@@ -7,24 +7,39 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:team_go_test/view/main.dart';
+import 'package:team_go_test/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('List present smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byType(ListView), findsOneWidget);
   });
+
+/*
+  testWidgets('Test details for exisitng event', (WidgetTester tester) async {
+    Event event = Event(
+        id: 1,
+        name: "aaa",
+        organiser: "bbb",
+        location: "loc",
+        time: DateTime.now());
+    await tester.pumpWidget(DetailScreen(event));
+
+    expect(find.byType(TextFormField), findsNothing);
+//    expect(find.text(event.id.toString()), findsOneWidget);
+    expect(find.text(event.name), findsOneWidget);
+    expect(find.text(event.location), findsOneWidget);
+    expect(find.byType(DateTimeField), findsOneWidget);
+  });
+*/
+
+
+/*  testWidgets('List present smoke test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MyApp());
+    await tester.pumpAndSettle();
+    expect(find.text("Activity1"), findsOneWidget);
+  });*/
 }

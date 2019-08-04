@@ -108,7 +108,7 @@ class _DetailsState extends State<DetailScreen> {
             }));
   }
 
-  Widget _createDateButton(AppLocalizations local) {
+  Widget _createDateField(AppLocalizations local) {
     return DateTimeField(
       format: _dateFormat,
       autovalidate: true,
@@ -160,7 +160,7 @@ class _DetailsState extends State<DetailScreen> {
           local, local.translate("organizer"), _orgInputController));
       result.add(_createInputRow(
           local, local.translate("location"), _locationInputController));
-      result.add(_createDateButton(local));
+      result.add(_createDateField(local));
       result.add(_createSaveButton(local, dao));
     }
     return result;
