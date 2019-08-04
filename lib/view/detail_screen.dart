@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/model/repo.dart';
+import 'package:team_go_test/repo/events_db.dart';
 
 import '../app_localizations.dart';
 
 
 class DetailScreen extends StatelessWidget {
-  final Repo _repo;
+  final Event _repo;
 
   DetailScreen(this._repo);
 
@@ -51,7 +51,7 @@ class DetailScreen extends StatelessWidget {
               children: [
                 _createDataRow(AppLocalizations.of(context).translate("id"), _repo.id.toString()),
                 _createDataRow(AppLocalizations.of(context).translate("name"), _repo.name),
-                _createDataRow(AppLocalizations.of(context).translate("full_name"), _repo.fullName)
+                _createDataRow(AppLocalizations.of(context).translate("organizer"), _repo.organiser)
               ]),
         )));
   }

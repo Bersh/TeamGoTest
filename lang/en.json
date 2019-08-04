@@ -1,8 +1,9 @@
 {
-  "app_title": "Flutter Demo",
-  "main_screen_title": "Repositories List",
-  "details_screen_title": "Repo details",
+  "main_screen_title": "Events List",
+  "details_screen_title": "Event details",
   "id": "ID",
   "name": "Name",
-  "full_name": "Full Name"
+  "organizer": "Organizer",
+  "time": "Time",
+  "location": "Location"
 }

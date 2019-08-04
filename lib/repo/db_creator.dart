@@ -11,7 +11,10 @@ class DatabaseCreator {
   static const reposTable = "repos";
   static const id = "id";
   static const name = "name";
-  static const fullName = "fullName";
+  static const organiser = "organiser";
+  static const location = "location";
+  static const time = "time";
+
 
   static void databaseLog(String functionName, String sql,
       [List<Map<String, dynamic>> selectQueryResult,
@@ -34,7 +37,7 @@ class DatabaseCreator {
     (
       $id INTEGER PRIMARY KEY,
       $name TEXT,
-      $fullName TEXT
+      $organiser TEXT
     )''';
 
     await db.execute(todoSql);
