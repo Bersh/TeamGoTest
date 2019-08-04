@@ -11,8 +11,28 @@ Please refer to the link above documentation to get instructions for your platfo
 You will also need [Android](http://www.androiddocs.com/sdk/installing/index.html) 
 and/or [iOS](https://medium.com/@LondonAppBrewery/how-to-download-and-setup-xcode-10-for-ios-development-b63bed1865c) SDK and build tools.
 All future instructions were written and tested using Android toolchain but should work with iOS as well with minor changes. 
+Check the next section for build command reference showing how to build for iOS.
 All flutter commands must be executed from root project folder.
 
+## General _flutter build_ documentation
+Can be found by running `flutter build -h`
+```flutter build params
+flutter build -h
+Flutter build commands.
+
+Usage: flutter build <subcommand> [arguments]
+-h, --help    Print this usage information.
+
+Available subcommands:
+  aot         Build an ahead-of-time compiled snapshot of your app's Dart code.
+  apk         Build an Android APK file from your app.
+  appbundle   Build an Android App Bundle file from your app.
+  bundle      Build the Flutter assets directory from your app.
+  ios         Build an iOS application bundle (Mac OS X host only).
+
+Run "flutter help" to see global options.
+
+```
 ## Instant run debug build on connected emulator
 `flutter run` 
 
