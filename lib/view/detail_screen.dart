@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:team_go_test/repo/events_db.dart';
 
 import '../app_localizations.dart';
 
+class DetailScreen extends StatefulWidget {
+  final Event _event;
 
-class DetailScreen extends StatelessWidget {
-  final Event _repo;
+  DetailScreen(this._event);
 
-  DetailScreen(this._repo);
+  @override
+  State<StatefulWidget> createState() {
+    return _DetailsState(_event);
+  }
+}
+
+class _DetailsState extends State<DetailScreen> {
+  final Event _event;
+
+  _DetailsState(this._event);
+
+  final DateFormat dateFormat = new DateFormat("dd-MM-yyyy hh:mm");
+  TextEditingController _nameInputController = new TextEditingController();
+  TextEditingController _orgInputController = new TextEditingController();
+  TextEditingController _locationInputController = new TextEditingController();
+  TextEditingController _timeInputController =
+      new TextEditingController(); //TODO remove
 
   Widget _getDataText(String data) {
     return Expanded(
@@ -36,11 +55,83 @@ class DetailScreen extends StatelessWidget {
         ));
   }
 
+  Widget _createInputRow(String title, TextEditingController controller) {
+    return TextField(
+      decoration: InputDecoration(hintText: title),
+      controller: controller,
+    );
+  }
+
+  Widget _createSaveButton(
+      BuildContext context, AppLocalizations local, EventsDao dao) {
+    return Container(
+        alignment: Alignment.centerRight,
+        margin: new EdgeInsets.only(top: 10.0),
+        child: FlatButton.icon(
+            color: Colors.blue,
+            icon: Icon(Icons.save),
+            label: Text(local.translate("save")),
+            onPressed: () {
+              dao.insertEvent(Event(
+                  name: _nameInputController.text,
+                  organiser: _orgInputController.text,
+                  location: _locationInputController.text,
+                  time: DateTime.now()));
+              Navigator.pop(context);
+            }));
+  }
+
+  Widget _createDeleteButton(BuildContext context, AppLocalizations local,
+      EventsDao dao, Event event) {
+    return Container(
+        alignment: Alignment.centerRight,
+        margin: new EdgeInsets.only(top: 10.0),
+        child: FlatButton.icon(
+            color: Colors.red,
+            icon: Icon(Icons.delete_forever),
+            label: Text(local.translate("delete")),
+            onPressed: () {
+              dao.deleteEvent(event);
+              Navigator.pop(context);
+            }));
+  }
+
+  List<Widget> _createDetailsWidgets(BuildContext context,
+      AppLocalizations local, EventsDao dao, Event event) {
+    List<Widget> result = [];
+    if (event != null) {
+      result.add(_createDataRow(local.translate("id"), _event.id.toString()));
+      result
+          .add(_createDataRow(local.translate("name"), _event.name.toString()));
+      result.add(_createDataRow(
+          local.translate("organizer"), _event.organiser.toString()));
+      result.add(_createDataRow(
+          local.translate("location"), _event.location.toString()));
+      result.add(_createDataRow(
+          local.translate("time"), dateFormat.format(_event.time)));
+      result.add(_createDeleteButton(context, local, dao, _event));
+    } else {
+      result
+          .add(_createInputRow(local.translate("name"), _nameInputController));
+      result.add(
+          _createInputRow(local.translate("organizer"), _orgInputController));
+      result.add(_createInputRow(
+          local.translate("location"), _locationInputController));
+      result
+          .add(_createInputRow(local.translate("time"), _timeInputController));
+      result.add(_createSaveButton(context, local, dao));
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final EventsDao dao = Provider.of<EventsDao>(context);
+    AppLocalizations local = AppLocalizations.of(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).translate("details_screen_title")),
+          title: Text(
+              AppLocalizations.of(context).translate("details_screen_title")),
         ),
         body: Container(
             child: Padding(
@@ -48,11 +139,7 @@ class DetailScreen extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _createDataRow(AppLocalizations.of(context).translate("id"), _repo.id.toString()),
-                _createDataRow(AppLocalizations.of(context).translate("name"), _repo.name),
-                _createDataRow(AppLocalizations.of(context).translate("organizer"), _repo.organiser)
-              ]),
+              children: _createDetailsWidgets(context, local, dao, _event)),
         )));
   }
 }

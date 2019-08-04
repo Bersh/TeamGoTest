@@ -5,5 +5,7 @@
   "name": "Name",
   "organizer": "Organizer",
   "time": "Time",
-  "location": "Location"
+  "location": "Location",
+  "save": "Save",
+  "delete": "Delete"
 }

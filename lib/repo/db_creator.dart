@@ -15,7 +15,6 @@ class DatabaseCreator {
   static const location = "location";
   static const time = "time";
 
-
   static void databaseLog(String functionName, String sql,
       [List<Map<String, dynamic>> selectQueryResult,
       int insertAndUpdateQueryResult,

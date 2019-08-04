@@ -13,12 +13,14 @@ class Event extends DataClass implements Insertable<Event> {
   final String organiser;
   final String location;
   final DateTime time;
+
   Event(
       {@required this.id,
       @required this.name,
       @required this.organiser,
       @required this.location,
       @required this.time});
+
   factory Event.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -36,6 +38,7 @@ class Event extends DataClass implements Insertable<Event> {
           dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}time']),
     );
   }
+
   factory Event.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return Event(
@@ -46,6 +49,7 @@ class Event extends DataClass implements Insertable<Event> {
       time: serializer.fromJson<DateTime>(json['time']),
     );
   }
+
   @override
   Map<String, dynamic> toJson(
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
@@ -86,6 +90,7 @@ class Event extends DataClass implements Insertable<Event> {
         location: location ?? this.location,
         time: time ?? this.time,
       );
+
   @override
   String toString() {
     return (StringBuffer('Event(')
@@ -105,6 +110,7 @@ class Event extends DataClass implements Insertable<Event> {
               $mrjc($mrjc(0, id.hashCode), name.hashCode), organiser.hashCode),
           location.hashCode),
       time.hashCode));
+
   @override
   bool operator ==(other) =>
       identical(this, other) ||
@@ -122,6 +128,7 @@ class EventsCompanion extends UpdateCompanion<Event> {
   final Value<String> organiser;
   final Value<String> location;
   final Value<DateTime> time;
+
   const EventsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -134,19 +141,25 @@ class EventsCompanion extends UpdateCompanion<Event> {
 class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
   final GeneratedDatabase _db;
   final String _alias;
+
   $EventsTable(this._db, [this._alias]);
+
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
+
   @override
   GeneratedIntColumn get id => _id ??= _constructId();
+
   GeneratedIntColumn _constructId() {
     return GeneratedIntColumn('id', $tableName, false, hasAutoIncrement: true);
   }
 
   final VerificationMeta _nameMeta = const VerificationMeta('name');
   GeneratedTextColumn _name;
+
   @override
   GeneratedTextColumn get name => _name ??= _constructName();
+
   GeneratedTextColumn _constructName() {
     return GeneratedTextColumn(
       'name',
@@ -157,8 +170,10 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
 
   final VerificationMeta _organiserMeta = const VerificationMeta('organiser');
   GeneratedTextColumn _organiser;
+
   @override
   GeneratedTextColumn get organiser => _organiser ??= _constructOrganiser();
+
   GeneratedTextColumn _constructOrganiser() {
     return GeneratedTextColumn(
       'organiser',
@@ -169,8 +184,10 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
 
   final VerificationMeta _locationMeta = const VerificationMeta('location');
   GeneratedTextColumn _location;
+
   @override
   GeneratedTextColumn get location => _location ??= _constructLocation();
+
   GeneratedTextColumn _constructLocation() {
     return GeneratedTextColumn(
       'location',
@@ -181,8 +198,10 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
 
   final VerificationMeta _timeMeta = const VerificationMeta('time');
   GeneratedDateTimeColumn _time;
+
   @override
   GeneratedDateTimeColumn get time => _time ??= _constructTime();
+
   GeneratedDateTimeColumn _constructTime() {
     return GeneratedDateTimeColumn(
       'time',
@@ -193,12 +212,15 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
 
   @override
   List<GeneratedColumn> get $columns => [id, name, organiser, location, time];
+
   @override
   $EventsTable get asDslTable => this;
+
   @override
   String get $tableName => _alias ?? 'events';
   @override
   final String actualTableName = 'events';
+
   @override
   VerificationContext validateIntegrity(EventsCompanion d,
       {bool isInserting = false}) {
@@ -237,6 +259,7 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
+
   @override
   Event map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
@@ -273,9 +296,12 @@ class $EventsTable extends Events with TableInfo<$EventsTable, Event> {
 abstract class _$EventsDB extends GeneratedDatabase {
   _$EventsDB(QueryExecutor e) : super(const SqlTypeSystem.withDefaults(), e);
   $EventsTable _events;
+
   $EventsTable get events => _events ??= $EventsTable(this);
   EventsDao _eventsDao;
+
   EventsDao get eventsDao => _eventsDao ??= EventsDao(this as EventsDB);
+
   @override
   List<TableInfo> get allTables => [events];
 }
@@ -286,6 +312,7 @@ abstract class _$EventsDB extends GeneratedDatabase {
 
 mixin _$EventsDaoMixin on DatabaseAccessor<EventsDB> {
   $EventsTable get events => db.events;
+
   EventsCountResult _rowToEventsCountResult(QueryRow row) {
     return EventsCountResult(
       count: row.readInt('COUNT(*)'),
@@ -309,6 +336,7 @@ mixin _$EventsDaoMixin on DatabaseAccessor<EventsDB> {
 
 class EventsCountResult {
   final int count;
+
   EventsCountResult({
     this.count,
   });

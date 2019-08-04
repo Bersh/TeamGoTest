@@ -15,7 +15,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String title = "";
-  final DateFormat dateFormat = new DateFormat("dd-MM-yyyy hh:mm:ss");
+  final DateFormat dateFormat = new DateFormat("dd-MM-yyyy hh:mm");
 
   @override
   void initState() {
@@ -56,12 +56,16 @@ class _MyHomePageState extends State<MyHomePage> {
               subtitle: Text(_getItemSubtitle(
                   event.organiser, event.location, event.time)),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DetailScreen(event)),
-                );
+                _openDetails(event);
               },
             )));
+  }
+
+  void _openDetails(Event event) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DetailScreen(event)),
+    );
   }
 
   String _getItemSubtitle(String who, String where, DateTime when) {
@@ -73,8 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var dao = Provider.of<EventsDao>(context);
-//    _subscribeForEvents(_streamController, dao);
     return Scaffold(
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
@@ -85,6 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Container(
           child: _buildTaskList(context),
         ),
-        resizeToAvoidBottomPadding: false);
+        resizeToAvoidBottomPadding: false,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _openDetails(null);
+          },
+          child: Icon(Icons.add),
+        ));
   }
 }

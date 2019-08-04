@@ -27,12 +27,7 @@ class Events extends Table {
 }
 
 @UseDao(
-  tables: [Events],
-    queries: {
-      'eventsCount':
-      'SELECT COUNT(*) FROM events;'
-    }
-)
+    tables: [Events], queries: {'eventsCount': 'SELECT COUNT(*) FROM events;'})
 class EventsDao extends DatabaseAccessor<EventsDB> with _$EventsDaoMixin {
   final EventsDB db;
 
