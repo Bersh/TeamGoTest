@@ -33,6 +33,7 @@ dependencies:
   moor_flutter: ^1.6.0
   provider: ^3.0.0+1
   intl: ^0.15.8
+  datetime_picker_formfield: ^0.4.0
 
 dev_dependencies:
   flutter_test:
