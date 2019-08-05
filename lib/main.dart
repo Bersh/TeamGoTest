@@ -13,6 +13,10 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  EventsDao eventsDao;
+
+  MyApp({this.eventsDao});
+
   Future<void> _initDbIfNeeded(BuildContext context, EventsDao dao) async {
     int count = (await dao.eventsCount())[0].count;
     if (count == 0) {
@@ -31,10 +35,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    final db = EventsDB();
-    _initDbIfNeeded(context, db.eventsDao);
+    if (eventsDao == null) {
+      final db = EventsDB();
+      eventsDao = db.eventsDao;
+    }
+
+    _initDbIfNeeded(context, eventsDao);
     return Provider(
-        builder: (_) => db.eventsDao,
+        builder: (_) => eventsDao,
         child: MaterialApp(
           localizationsDelegates: [
             AppLocalizations.delegate,
